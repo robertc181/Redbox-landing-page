@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Redbox AI Automation</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="apple-touch-icon" href="favicon.png">
+    <meta property="og:image" content="favicon.png">
+    <meta name="twitter:image" content="favicon.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -35,6 +39,20 @@
             border-radius: 9999px; /* Fully rounded */
             padding: 0.75rem 1.25rem;
         }
+        .loading-spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left-color: #6B46C1;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: 8px;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body class="text-gray-800">
@@ -64,7 +82,7 @@
                 Automate Your Business with <span class="text-indigo-600">Smart AI Assistants</span>
             </h1>
             <p class="text-lg md:text-xl text-gray-600 mb-10 max-w-2xl mx-auto">
-                Streamline customer conversations, manage bookings, and enhance messaging across all your platforms.
+                Streamline customer conversations, qualify leads, manage bookings, and enhance messaging across your website, WhatsApp, SMS, and phone calls.
             </p>
             <button class="gradient-button text-white font-semibold py-3 px-8 rounded-full text-lg shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50">
                 Let's Talk
@@ -75,7 +93,8 @@
     <!-- Live Demo / AI Assistant UI Placeholder -->
     <section class="py-16 md:py-24 bg-gray-50">
         <div class="max-w-5xl mx-auto px-6 text-center">
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-12">See Our AI Assistant in Action</h2>
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-12">Meet our AI Assistant — built for Redbox AI.</h2>
+            <p class="text-lg text-gray-600 mb-8">It knows our business inside and out. You can ask it anything, book a call, or learn how we can help all through the chat. It’s live on this page so you can see exactly what it’s capable of. Saving us time and showing you what’s possible in your business.</p>
             <div class="relative bg-white rounded-3xl shadow-xl p-6 md:p-8 max-w-xl mx-auto border border-gray-200">
                 <!-- AI Assistant UI -->
                 <div class="flex flex-col h-[450px] md:h-[550px]">
@@ -84,7 +103,7 @@
                         <div class="flex items-center">
                             <div class="w-10 h-10 rounded-full bg-indigo-500 flex items-center justify-center text-white font-bold text-lg mr-3">AI</div>
                             <div>
-                                <p class="font-semibold text-gray-900">Redbox Assistant</p>
+                                <p class="font-semibold text-gray-900">AI Powered Digital Assistant</p>
                                 <p class="text-sm text-green-500">Online</p>
                             </div>
                         </div>
@@ -98,19 +117,19 @@
                         <!-- Example AI Message -->
                         <div class="flex justify-start">
                             <div class="ai-assistant-chat-bubble text-gray-700">
-                                Hi there! How can I help you today?
+                                Hi there! I'm your AI Powered Digital Assistant. How can I help you streamline your business today?
                             </div>
                         </div>
                         <!-- Example User Message -->
                         <div class="flex justify-end">
                             <div class="ai-assistant-chat-bubble bg-indigo-100 text-indigo-800">
-                                I'd like to book a demo.
+                                I'm interested in automating customer support.
                             </div>
                         </div>
                         <!-- Example AI Message -->
                         <div class="flex justify-start">
                             <div class="ai-assistant-chat-bubble text-gray-700">
-                                Great! What day and time works best for you?
+                                Excellent! Are you looking to handle FAQs, manage bookings, qualify leads, or all of the above?
                             </div>
                         </div>
                     </div>
@@ -134,38 +153,44 @@
     <!-- What We Automate Section -->
     <section class="py-16 md:py-24 bg-white">
         <div class="max-w-6xl mx-auto px-6 text-center">
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-12">What Our AI Assistants Automate</h2>
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-12">What Our Smart AI Assistants Can Do For You</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Feature Card 1 -->
+                <!-- Feature Card 1: Customer Questions & Business Knowledge -->
                 <div class="bg-gray-50 p-8 rounded-xl shadow-md card-hover transition-all duration-300 border border-gray-200">
                     <div class="text-indigo-600 mb-4">
                         <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-900 mb-3">Handle Customer Questions</h3>
-                    <p class="text-gray-600">
-                        Our smart assistants provide instant, accurate answers to common customer inquiries 24/7, freeing up your team.
+                    <h3 class="text-xl font-semibold text-gray-900 mb-3">Intelligent Customer Support</h3>
+                    <p class="text-gray-600 mb-4">
+                        Our AI assistants provide instant, accurate answers to typical FAQs and specific business queries 24/7, saving your team countless hours.
                     </p>
                 </div>
-                <!-- Feature Card 2 -->
+                <!-- Feature Card 2: Bookings & Calendar Automation -->
                 <div class="bg-gray-50 p-8 rounded-xl shadow-md card-hover transition-all duration-300 border border-gray-200">
                     <div class="text-indigo-600 mb-4">
                         <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2zm3-13h.01M13 13h.01"></path></svg>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-900 mb-3">Take Bookings & Appointments</h3>
-                    <p class="text-gray-600">
-                        Automate scheduling, manage calendars, and send reminders, ensuring no booking is missed.
+                    <h3 class="text-xl font-semibold text-gray-900 mb-3">Automated Bookings & Calendars</h3>
+                    <p class="text-gray-600 mb-4">
+                        Seamlessly manage appointments, integrate with your Gmail calendar, and send automated reminders, ensuring smooth scheduling.
                     </p>
                 </div>
-                <!-- Feature Card 3 -->
+                <!-- Feature Card 3: Lead Qualification & Multi-Channel Communication -->
                 <div class="bg-gray-50 p-8 rounded-xl shadow-md card-hover transition-all duration-300 border border-gray-200">
                     <div class="text-indigo-600 mb-4">
                         <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path></svg>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-900 mb-3">Manage Follow-ups & Messaging</h3>
-                    <p class="text-gray-600">
-                        Ensure timely communication across WhatsApp, SMS, and your website with automated follow-ups.
+                    <h3 class="text-xl font-semibold text-gray-900 mb-3">Lead Qualification & Unified Messaging</h3>
+                    <p class="text-gray-600 mb-4">
+                        Qualify leads effortlessly and handle communication across WhatsApp, SMS, Facebook Messenger, and phone calls, all without lifting a finger.
                     </p>
                 </div>
+            </div>
+            <div class="mt-12 text-center max-w-3xl mx-auto">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Need a Website or Custom Forms?</h3>
+                <p class="text-gray-600">
+                    Beyond AI, we can also build small, effective websites for your business and create custom forms to collect client information, manage client data, or build a custom admin portal to handle clients.
+                </p>
             </div>
         </div>
     </section>
@@ -173,16 +198,16 @@
     <!-- How It Works Section -->
     <section class="py-16 md:py-24 bg-gray-50">
         <div class="max-w-6xl mx-auto px-6 text-center">
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-12">How It Works</h2>
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-12">Our Simple Process</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <!-- Step 1 -->
                 <div class="p-6 rounded-xl border border-gray-200 shadow-sm">
                     <div class="w-16 h-16 mx-auto bg-indigo-100 rounded-full flex items-center justify-center mb-4">
                         <span class="text-3xl font-bold text-indigo-600">1</span>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-900 mb-2">We Talk</h3>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">We Talk & Understand</h3>
                     <p class="text-gray-600">
-                        We begin with a detailed discussion to understand your unique business needs and automation goals.
+                        We start with a comprehensive discussion to grasp your specific business needs, automation goals, and any website or custom form requirements.
                     </p>
                 </div>
                 <!-- Step 2 -->
@@ -190,9 +215,9 @@
                     <div class="w-16 h-16 mx-auto bg-indigo-100 rounded-full flex items-center justify-center mb-4">
                         <span class="text-3xl font-bold text-indigo-600">2</span>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-900 mb-2">We Build</h3>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">We Build & Integrate</h3>
                     <p class="text-gray-600">
-                        Our experts then design and deploy custom AI assistants tailored precisely to your specifications.
+                        Our experts then design, deploy, and integrate custom AI assistants, build your website, forms, or admin portals tailored precisely to your specifications.
                     </p>
                 </div>
                 <!-- Step 3 -->
@@ -200,9 +225,57 @@
                     <div class="w-16 h-16 mx-auto bg-indigo-100 rounded-full flex items-center justify-center mb-4">
                         <span class="text-3xl font-bold text-indigo-600">3</span>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-900 mb-2">You Relax</h3>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">You Relax & Grow</h3>
                     <p class="text-gray-600">
-                        Enjoy the benefits of automated efficiency while your AI assistants handle the heavy lifting.
+                        Enjoy the benefits of 24/7 automated efficiency, qualified leads, and streamlined operations. Our AI even helps us qualify and book chats with you!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Multi-Channel Communication & Booking Section -->
+    <section class="relative py-16 md:py-24 bg-indigo-50 overflow-hidden">
+        <div class="max-w-6xl mx-auto px-6 text-center relative z-10">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-12">Seamless Communication Across All Channels</h2>
+            <p class="text-lg text-gray-700 mb-10 max-w-3xl mx-auto">
+                Your Redbox AI assistant works tirelessly across every platform, ensuring no customer goes unanswered and every opportunity is captured.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 text-left">
+                <!-- SMS & Phone Communication -->
+                <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-200">
+                    <div class="text-indigo-600 mb-4 text-5xl">📞</div> <!-- Emoji for phone -->
+                    <h3 class="text-2xl font-semibold text-gray-900 mb-4">24/7 SMS & Phone Call Assistant</h3>
+                    <p class="text-gray-700 mb-4">
+                        Imagine an assistant that takes calls and handles SMS inquiries around the clock. Our AI gathers crucial information, answers questions, and qualifises leads, even when you're offline.
+                    </p>
+                    <p class="text-gray-700">
+                        Should a conversation require a human touch, the AI intelligently escalates the issue, notifying you with all the necessary details so you can step in and provide personalised support exactly when needed.
+                    </p>
+                </div>
+
+                <!-- WhatsApp & Messenger Communication -->
+                <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-200">
+                    <div class="text-indigo-600 mb-4 text-5xl">📱</div> <!-- Emoji for mobile/messaging -->
+                    <h3 class="text-2xl font-semibold text-gray-900 mb-4">Automated WhatsApp & Messenger</h3>
+                    <p class="text-gray-700 mb-4">
+                        Eliminate the need to communicate with every customer individually on WhatsApp and Facebook Messenger. Our AI handles conversations, provides instant responses, and guides customers through their journey.
+                    </p>
+                    <p class="text-gray-700">
+                        Just like with calls and SMS, if a situation escalates or requires your direct attention, you'll be promptly notified with the full context, allowing you to seamlessly take over the conversation.
+                    </p>
+                </div>
+
+                <!-- Google Calendar & Gmail Booking -->
+                <div class="md:col-span-2 bg-white p-8 rounded-xl shadow-lg border border-gray-200">
+                    <div class="text-indigo-600 mb-4 text-5xl">🗓️</div> <!-- Emoji for calendar -->
+                    <h3 class="text-2xl font-semibold text-gray-900 mb-4">Direct Booking into Your Google Calendar</h3>
+                    <p class="text-gray-700 mb-4">
+                        Our AI assistants can directly book appointments into your Google Calendar, integrating seamlessly with your Gmail. This means clients can book a chat with you from anywhere, at any time, via your website, SMS, phone number, or WhatsApp.
+                    </p>
+                    <p class="text-gray-700">
+                        Whether they need a full consultation or just a quick booking, the AI handles the entire scheduling process, automating your calendar and ensuring you never miss an opportunity. We can also build custom admin portals for you to manage all client interactions.
                     </p>
                 </div>
             </div>
@@ -214,7 +287,7 @@
         <div class="max-w-3xl mx-auto px-6">
             <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-8">Ready to Transform Your Business?</h2>
             <p class="text-lg text-gray-600 mb-10">
-                Discover how Redbox AI automation can revolutionize your customer interactions and operational efficiency.
+                Discover how Redbox AI automation can revolutionise your customer interactions, operational efficiency, and lead generation. Click below to chat with our AI assistant and book your consultation.
             </p>
             <button class="gradient-button text-white font-semibold py-3 px-8 rounded-full text-lg shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50">
                 Let's Talk
@@ -226,6 +299,50 @@
     <footer class="bg-gray-800 text-white py-8 text-center">
         <p>&copy; 2025 Redbox AI Automation. All rights reserved.</p>
     </footer>
+
+    <script>
+        // JavaScript for Gemini API integration (only Business Idea Brainstormer logic remains)
+        document.addEventListener('DOMContentLoaded', () => {
+            const apiKey = ""; // Canvas will automatically provide this in runtime
+
+            /**
+             * Calls the Gemini API to generate content.
+             * @param {string} prompt The text prompt for the LLM.
+             * @returns {Promise<string>} The generated text.
+             */
+            async function callGeminiAPI(prompt) {
+                let chatHistory = [];
+                chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+
+                const payload = { contents: chatHistory };
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    const result = await response.json();
+
+                    if (result.candidates && result.candidates.length > 0 &&
+                        result.candidates[0].content && result.candidates[0].content.parts &&
+                        result.candidates[0].content.parts.length > 0) {
+                        return result.candidates[0].content.parts[0].text;
+                    } else {
+                        console.error("Gemini API response structure unexpected:", result);
+                        return "Failed to generate content. Please try again.";
+                    }
+                } catch (error) {
+                    console.error("Error calling Gemini API:", error);
+                    return "An error occurred while connecting to the AI. Please try again.";
+                    }
+            }
+
+            // --- Business Idea Brainstormer Logic (removed as per user request) ---
+            // The code for this section has been removed.
+        });
+    </script>
 
 </body>
 </html>
