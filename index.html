@@ -13,35 +13,55 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f8f8f8; /* Light gray background */
+            background-color: #F9FAFB; /* Light off-white background for overall page */
         }
+        /* New Dark Red Color Scheme */
+        .color-primary-dark-red {
+            color: #4A0000; /* Main dark red for backgrounds, etc. */
+        }
+        .bg-primary-dark-red {
+            background-color: #4A0000;
+        }
+        .color-accent-red {
+            color: #8B0000; /* Darker red for accents like buttons and highlighted text */
+        }
+        .bg-accent-red {
+            background-color: #8B0000;
+        }
+        .hover\:bg-accent-red-darker:hover {
+            background-color: #6A0000; /* Even darker red on hover for buttons */
+        }
+
+        /* Overriding existing styles with new red scheme */
         .gradient-button {
-            background-image: linear-gradient(to right, #6B46C1, #805AD5); /* Purple gradient */
+            background-image: none; /* Remove gradient */
+            background-color: #8B0000; /* Solid dark red */
             transition: all 0.3s ease;
         }
         .gradient-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(107, 70, 193, 0.4);
+            box-shadow: 0 4px 15px rgba(139, 0, 0, 0.4); /* Red shadow on hover */
+            background-color: #6A0000; /* Darker red on hover */
         }
         .card-hover:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
         }
         .ai-assistant-chat-bubble {
-            background-color: #e2e8f0; /* Light gray for chat bubbles */
-            border-radius: 1.25rem; /* Large rounded corners */
+            background-color: #FEE; /* Very light red for chat bubbles */
+            border-radius: 1.25rem;
             padding: 0.75rem 1rem;
             max-width: 80%;
         }
         .ai-assistant-input {
             background-color: #ffffff;
-            border: 1px solid #cbd5e0;
-            border-radius: 9999px; /* Fully rounded */
+            border: 1px solid #F0DCDC; /* Lighter red border */
+            border-radius: 9999px;
             padding: 0.75rem 1.25rem;
         }
         .loading-spinner {
             border: 4px solid rgba(0, 0, 0, 0.1);
-            border-left-color: #6B46C1;
+            border-left-color: #8B0000; /* Red spinner */
             border-radius: 50%;
             width: 24px;
             height: 24px;
@@ -54,18 +74,86 @@
             to { transform: rotate(360deg); }
         }
         .choose-btn {
-            background-color: #6a0dad;
+            background-color: #8B0000; /* Dark red */
             transition: background 0.3s;
         }
         .choose-btn:hover {
-            background-color: #5a099a;
+            background-color: #6A0000; /* Darker red on hover */
+        }
+        /* Specific section background color */
+        .bg-light-red-tint {
+            background-color: #FFF5F5; /* A very light red tint */
+        }
+
+
+        /* Privacy Consent Banner Styles */
+        .privacy-consent-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #ffffff; /* White background for the banner */
+            padding: 1.5rem 2rem; /* Adjust padding for height */
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); /* Subtle top shadow */
+            z-index: 1000;
+            transform: translateY(100%); /* Start off-screen at the bottom */
+            opacity: 0;
+            visibility: hidden;
+            transition: transform 0.3s ease-out, opacity 0.3s ease-out, visibility 0.3s ease;
+            display: flex; /* Use flexbox for content alignment */
+            flex-direction: column; /* Stack content vertically */
+            align-items: center; /* Center content horizontally */
+            text-align: center; /* Center text within the banner */
+        }
+        .privacy-consent-banner.active {
+            transform: translateY(0);
+            opacity: 1;
+            visibility: visible;
+        }
+        .privacy-consent-banner .privacy-content-wrapper {
+            max-width: 900px; /* Max width for content inside the banner */
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .privacy-consent-banner ul {
+            padding-left: 0; /* Remove default list padding */
+            list-style-position: inside; /* Keep bullets inside */
+            text-align: center; /* Center list items */
+        }
+        /* Adjust for smaller screens */
+        @media (min-width: 768px) {
+            .privacy-consent-banner {
+                flex-direction: row; /* Horizontal layout on larger screens */
+                justify-content: center; /* Center content horizontally */
+                padding: 1rem 2rem; /* Slightly less vertical padding for a more compact bar */
+            }
+            .privacy-consent-banner .privacy-content-wrapper {
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                gap: 1.5rem; /* Space between text and button */
+            }
+            .privacy-consent-banner p, .privacy-consent-banner ul {
+                margin-bottom: 0; /* Remove bottom margin for horizontal layout */
+            }
+            .privacy-consent-banner ul {
+                text-align: left; /* Align list items left within their container */
+                list-style-position: outside;
+                padding-left: 1.25rem; /* Standard padding for list bullets */
+            }
+            .privacy-consent-banner .privacy-text-area {
+                text-align: left; /* Align text left */
+                flex-grow: 1; /* Allow text area to grow */
+            }
         }
     </style>
 </head>
 <body class="text-gray-800">
 
     <!-- Top Banner -->
-    <div class="w-full bg-indigo-700 text-white text-center py-2 text-sm font-medium">
+    <div class="w-full bg-primary-dark-red text-white text-center py-2 text-sm font-medium">
         Early customers are entitled to an exclusive new customer deal!
     </div>
 
@@ -74,7 +162,7 @@
         <!-- Redbox Logo (SVG) -->
         <div class="flex items-center">
             <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" class="mr-2">
-                <rect x="2" y="2" width="32" height="32" rx="8" fill="#1A202C"/> <!-- Dark gray/black background for the box -->
+                <rect x="2" y="2" width="32" height="32" rx="8" fill="#4A0000"/> <!-- Dark red wine background for the box -->
                 <path d="M10 10H18C19.1046 10 20 10.8954 20 12V16C20 17.1046 19.1046 18 18 18H10V10Z" fill="white"/>
                 <path d="M10 20H22C23.1046 20 24 20.8954 24 22V24C24 25.1046 23.1046 26 22 26H10V20Z" fill="white"/>
             </svg>
@@ -86,12 +174,13 @@
     <section class="relative bg-white py-16 md:py-24 text-center overflow-hidden">
         <div class="max-w-4xl mx-auto px-6">
             <h1 class="text-4xl md:text-6xl font-extrabold leading-tight text-gray-900 mb-6">
-                Automate Your Business with <span class="text-indigo-600">Smart AI Assistants</span>
+                Automate Your Business with <span class="color-accent-red">Redbox</span>
             </h1>
             <p class="text-lg md:text-xl text-gray-600 mb-10 max-w-2xl mx-auto">
-                Streamline customer conversations, qualify leads, manage bookings, and enhance messaging across your website, WhatsApp, SMS, and phone calls. Perfect for small to medium-sized businesses looking to scale efficiently.
+                From answering calls and messages to managing bookings and internal forms, our tools work 24/7 to keep your business
+                running smoothly, including WhatsApp, Auto SMS, and phone calls.
             </p>
-            <button class="gradient-button text-white font-semibold py-3 px-8 rounded-full text-lg shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50">
+            <button class="gradient-button text-white font-semibold py-3 px-8 rounded-full text-lg shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">
                 Let's Talk
             </button>
         </div>
@@ -100,8 +189,8 @@
     <!-- Live Demo / AI Assistant UI Placeholder -->
     <section class="py-16 md:py-24 bg-gray-50">
         <div class="max-w-5xl mx-auto px-6 text-center">
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-12">Meet our AI Assistant — built for Redbox AI.</h2>
-            <p class="text-lg text-gray-600 mb-8">This is Redbox's own AI chat assistant, trained specifically on our company knowledge, but when you get yours, it will be trained uniquely on your business to answer questions, take bookings, collect customer details, and handle inquiries exactly as you need.</p>
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-12">Meet our Website Assistant — built for Redbox.</h2>
+            <p class="text-lg text-gray-600 mb-8">It knows our business inside and out. You can ask it anything, book a call, or learn how we can help all through the chat. It’s live on this page so you can see exactly what it’s capable of. Saving us time and showing you what’s possible in your business.</p>
             <div class="">
               <iframe
                 class="w-full"
@@ -119,21 +208,21 @@
     <!-- What We Automate Section -->
     <section class="py-16 md:py-24 bg-white">
         <div class="max-w-6xl mx-auto px-6 text-center">
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-12">What Our Smart AI Assistants Can Do For You</h2>
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-12">What Our Smart Website Assistants Can Do For You</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Feature Card 1: Customer Questions & Business Knowledge -->
+                <!-- Feature Card 1: Intelligent Customer Support -->
                 <div class="bg-gray-50 p-8 rounded-xl shadow-md card-hover transition-all duration-300 border border-gray-200">
-                    <div class="text-indigo-600 mb-4">
+                    <div class="color-accent-red mb-4">
                         <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
                     </div>
                     <h3 class="text-xl font-semibold text-gray-900 mb-3">Intelligent Customer Support</h3>
                     <p class="text-gray-600 mb-4">
-                        Our AI assistants provide instant, accurate answers to typical FAQs and specific business queries 24/7, saving your team countless hours.
+                        Our assistants provide instant, accurate answers to typical FAQs and specific business queries 24/7, saving your team countless hours.
                     </p>
                 </div>
-                <!-- Feature Card 2: Bookings & Calendar Automation -->
+                <!-- Feature Card 2: Automated Bookings & Calendars -->
                 <div class="bg-gray-50 p-8 rounded-xl shadow-md card-hover transition-all duration-300 border border-gray-200">
-                    <div class="text-indigo-600 mb-4">
+                    <div class="color-accent-red mb-4">
                         <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2zm3-13h.01M13 13h.01"></path></svg>
                     </div>
                     <h3 class="text-xl font-semibold text-gray-900 mb-3">Automated Bookings & Calendars</h3>
@@ -143,7 +232,7 @@
                 </div>
                 <!-- Feature Card 3: Lead Qualification & Multi-Channel Communication -->
                 <div class="bg-gray-50 p-8 rounded-xl shadow-md card-hover transition-all duration-300 border border-gray-200">
-                    <div class="text-indigo-600 mb-4">
+                    <div class="color-accent-red mb-4">
                         <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path></svg>
                     </div>
                     <h3 class="text-xl font-semibold text-gray-900 mb-3">Lead Qualification & Unified Messaging</h3>
@@ -162,14 +251,14 @@
     </section>
 
     <!-- How It Works Section -->
-    <section class="py-16 md:py-24 bg-gray-50">
+    <section class="py-16 md:py-24 bg-light-red-tint">
         <div class="max-w-6xl mx-auto px-6 text-center">
             <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-12">Our Simple Process</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <!-- Step 1 -->
                 <div class="p-6 rounded-xl border border-gray-200 shadow-sm">
-                    <div class="w-16 h-16 mx-auto bg-indigo-100 rounded-full flex items-center justify-center mb-4">
-                        <span class="text-3xl font-bold text-indigo-600">1</span>
+                    <div class="w-16 h-16 mx-auto bg-accent-red rounded-full flex items-center justify-center mb-4">
+                        <span class="text-3xl font-bold text-white">1</span>
                     </div>
                     <h3 class="text-xl font-semibold text-gray-900 mb-2">We Talk & Understand</h3>
                     <p class="text-gray-600">
@@ -178,8 +267,8 @@
                 </div>
                 <!-- Step 2 -->
                 <div class="p-6 rounded-xl border border-gray-200 shadow-sm">
-                    <div class="w-16 h-16 mx-auto bg-indigo-100 rounded-full flex items-center justify-center mb-4">
-                        <span class="text-3xl font-bold text-indigo-600">2</span>
+                    <div class="w-16 h-16 mx-auto bg-accent-red rounded-full flex items-center justify-center mb-4">
+                        <span class="text-3xl font-bold text-white">2</span>
                     </div>
                     <h3 class="text-xl font-semibold text-gray-900 mb-2">We Build & Integrate</h3>
                     <p class="text-gray-600">
@@ -188,8 +277,8 @@
                 </div>
                 <!-- Step 3 -->
                 <div class="p-6 rounded-xl border border-gray-200 shadow-sm">
-                    <div class="w-16 h-16 mx-auto bg-indigo-100 rounded-full flex items-center justify-center mb-4">
-                        <span class="text-3xl font-bold text-indigo-600">3</span>
+                    <div class="w-16 h-16 mx-auto bg-accent-red rounded-full flex items-center justify-center mb-4">
+                        <span class="text-3xl font-bold text-white">3</span>
                     </div>
                     <h3 class="text-xl font-semibold text-gray-900 mb-2">You Relax & Grow</h3>
                     <p class="text-gray-600">
@@ -247,7 +336,7 @@
     </section> -->
 
     
-<section class="relative py-16 md:py-24 bg-[#F3EEFF] overflow-hidden">
+<!-- <section class="relative py-16 md:py-24 bg-[#F3EEFF] overflow-hidden">
     <div class="max-w-6xl mx-auto px-6 text-center relative z-10">
         <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-12">Seamless Communication Across All Channels</h2>
         <p class="text-lg text-gray-700 mb-10 max-w-3xl mx-auto">
@@ -286,7 +375,7 @@
             </div>
         </div>
     </div>
-</section>
+</section> -->
 
     <!-- Final CTA Section -->
     <section class="bg-white py-16 md:py-24 text-center">
@@ -295,7 +384,7 @@
             <p class="text-lg text-gray-600 mb-10">
                 Discover how Redbox AI automation can revolutionise your customer interactions, operational efficiency, and lead generation. Click below to chat with our AI assistant and book your consultation.
             </p>
-            <button class="gradient-button text-white font-semibold py-3 px-8 rounded-full text-lg shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50">
+            <button class="gradient-button text-white font-semibold py-3 px-8 rounded-full text-lg shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">
                 Let's Talk
             </button>
         </div>
@@ -975,9 +1064,39 @@
     </section> -->
 
     <!-- Footer (Basic) -->
-    <footer class="bg-gray-800 text-white py-8 text-center">
-        <p>&copy; 2025 Redbox AI Automation. All rights reserved.</p>
+    <footer class="bg-primary-dark-red text-white py-8">
+        <div class="max-w-6xl mx-auto px-6 text-center">
+            <div class="flex flex-col md:flex-row justify-center items-center mb-4">
+                <!-- Redbox Logo (SVG) in Footer -->
+                <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" class="mr-2 mb-2 md:mb-0">
+                    <rect x="2" y="2" width="32" height="32" rx="8" fill="white"/> <!-- White background for the box -->
+                    <path d="M10 10H18C19.1046 10 20 10.8954 20 12V16C20 17.1046 19.1046 18 18 18H10V10Z" fill="#4A0000"/>
+                    <path d="M10 20H22C23.1046 20 24 20.8954 24 22V24C24 25.1046 23.1046 26 22 26H10V20Z" fill="#4A0000"/>
+                </svg>
+                <span class="text-xl font-semibold">Redbox AI Automation</span>
+            </div>
+            <p class="text-sm text-gray-300">&copy; 2024 Redbox AI. All rights reserved.</p>
+            <div class="flex justify-center space-x-4 mt-4 text-sm">
+                <a href="#" class="text-gray-300 hover:text-white transition-colors duration-200">Privacy Policy</a>
+                <a href="#" class="text-gray-300 hover:text-white transition-colors duration-200">Terms of Service</a>
+            </div>
+        </div>
     </footer>
+
+     <!-- Privacy Consent Banner -->
+     <div id="privacyConsentBanner" class="privacy-consent-banner">
+        <div class="privacy-content-wrapper">
+            <div class="privacy-text-area">
+                <p class="text-gray-700 text-sm mb-2 md:mb-0">
+                    To enhance your experience, our chatbot may collect your company name, user name, phone number, and email. This data is used to tailor our services and improve communication. For details, see our
+                    <a href="#" class="color-accent-red hover:underline font-medium">Privacy Policy</a>.
+                </p>
+            </div>
+            <button id="acceptConsentButton" class="gradient-button text-white font-semibold py-2 px-6 rounded-full text-sm shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 mt-3 md:mt-0">
+                Ok
+            </button>
+        </div>
+    </div>
 
     <script>
         // JavaScript for Gemini API integration (only Business Idea Brainstormer logic remains)
@@ -1022,6 +1141,31 @@
             // The code for this section has been removed.
         });
     </script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const privacyConsentBanner = document.getElementById('privacyConsentBanner');
+        const acceptConsentButton = document.getElementById('acceptConsentButton');
+
+        // Function to show the banner
+        function showBanner() {
+            privacyConsentBanner.classList.add('active');
+        }
+
+        // Function to hide the banner
+        function hideBanner() {
+            privacyConsentBanner.classList.remove('active');
+        }
+
+        // Show the banner automatically when the page loads
+        showBanner();
+
+        // Event listener for the "I Agree" button
+        if (acceptConsentButton) {
+            acceptConsentButton.addEventListener('click', hideBanner);
+        }
+    });
+</script>
 
 </body>
 </html>
