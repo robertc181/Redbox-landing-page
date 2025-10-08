@@ -4,12 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Redbox AI Automation</title>
+    <!-- Favicon using inline SVG -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3csvg width='36' height='36' viewBox='0 0 36 36' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3crect x='2' y='2' width='32' height='32' rx='8' fill='%234A0000'/%3e%3cpath d='M10 10H18C19.1046 10 20 10.8954 20 12V16C20 17.1046 19.1046 18 18 18H10V10Z' fill='white'/%3e%3cpath d='M10 20H22C23.1046 20 24 20.8954 24 22V24C24 25.1046 23.1046 26 22 26H10V20Z' fill='white'/%3e%3c/svg%3e">
+    <!-- Fallback PNG favicon for older browsers -->
     <link rel="icon" type="image/png" href="favicon.png">
-    <link rel="apple-touch-icon" href="favicon.png">
-    <meta property="og:image" content="favicon.png">
-    <meta name="twitter:image" content="favicon.png">
+    <!-- Apple touch icons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="data:image/svg+xml,%3csvg width='180' height='180' viewBox='0 0 36 36' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3crect x='2' y='2' width='32' height='32' rx='8' fill='%234A0000'/%3e%3cpath d='M10 10H18C19.1046 10 20 10.8954 20 12V16C20 17.1046 19.1046 18 18 18H10V10Z' fill='white'/%3e%3cpath d='M10 20H22C23.1046 20 24 20.8954 24 22V24C24 25.1046 23.1046 26 22 26H10V20Z' fill='white'/%3e%3c/svg%3e">
+    <!-- Social media meta images -->
+    <meta property="og:image" content="data:image/svg+xml,%3csvg width='1200' height='630' viewBox='0 0 1200 630' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='1200' height='630' fill='%23F9FAFB'/%3e%3crect x='400' y='200' width='400' height='230' rx='40' fill='%234A0000'/%3e%3cpath d='M480 280H600C610.457 280 619 288.543 619 299V339C619 349.457 610.457 358 600 358H480V280Z' fill='white'/%3e%3cpath d='M480 380H660C670.457 380 679 388.543 679 399V409C679 419.457 670.457 428 660 428H480V380Z' fill='white'/%3e%3c/svg%3e">
+    <meta name="twitter:image" content="data:image/svg+xml,%3csvg width='1200' height='630' viewBox='0 0 1200 630' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='1200' height='630' fill='%23F9FAFB'/%3e%3crect x='400' y='200' width='400' height='230' rx='40' fill='%234A0000'/%3e%3cpath d='M480 280H600C610.457 280 619 288.543 619 299V339C619 349.457 610.457 358 600 358H480V280Z' fill='white'/%3e%3cpath d='M480 380H660C670.457 380 679 388.543 679 399V409C679 419.457 670.457 428 660 428H480V380Z' fill='white'/%3e%3c/svg%3e">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Calendly Script -->
+    <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -86,6 +93,66 @@
         }
 
 
+        /* Calendly Modal Styles */
+        .calendly-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .calendly-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .calendly-modal-content {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            max-width: 90vw;
+            max-height: 90vh;
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+        .calendly-close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: #8B0000;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+        }
+        .calendly-close-btn:hover {
+            background: #6A0000;
+        }
+        @media (min-width: 768px) {
+            .calendly-modal-content {
+                max-width: 1000px;
+                max-height: 800px;
+                height: auto;
+            }
+        }
+
         /* Privacy Consent Banner Styles */
         .privacy-consent-banner {
             position: fixed;
@@ -154,7 +221,7 @@
 
     <!-- Top Banner -->
     <div class="w-full bg-primary-dark-red text-white text-center py-2 text-sm font-medium">
-        Early customers are entitled to an exclusive new customer deal!
+        Early customers are entitled to a new customer deal!
     </div>
 
     <!-- Navbar -->
@@ -179,7 +246,7 @@
             <p class="text-lg md:text-xl text-gray-600 mb-10 max-w-2xl mx-auto">
                 From capturing new leads to managing bookings and client reminders, our AI tools work 24/7 to keep your business running smoothly.
             </p>
-            <button class="gradient-button text-white font-semibold py-3 px-8 rounded-full text-lg shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">
+            <button onclick="openCalendlyModal()" class="gradient-button text-white font-semibold py-3 px-8 rounded-full text-lg shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">
                 Let's Talk
             </button>
         </div>
@@ -405,7 +472,7 @@
             <p class="text-lg text-gray-600 mb-10">
                 Discover how Redbox AI automation can revolutionise your customer interactions, operational efficiency, and lead generation. Click below to chat with our AI assistant and book your consultation.
             </p>
-            <button class="gradient-button text-white font-semibold py-3 px-8 rounded-full text-lg shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">
+            <button onclick="openCalendlyModal()" class="gradient-button text-white font-semibold py-3 px-8 rounded-full text-lg shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">
                 Let's Talk
             </button>
         </div>
@@ -1104,6 +1171,16 @@
         </div>
     </footer>
 
+     <!-- Calendly Modal -->
+     <div id="calendlyModal" class="calendly-modal">
+        <div class="calendly-modal-content">
+            <button onclick="closeCalendlyModal()" class="calendly-close-btn">&times;</button>
+            <!-- Calendly inline widget begin -->
+            <div class="calendly-inline-widget" data-url="https://calendly.com/rdancole-vyuj/quick-chat?hide_event_type_details=1&hide_gdpr_banner=1" style="min-width:320px;height:700px;"></div>
+            <!-- Calendly inline widget end -->
+        </div>
+    </div>
+
      <!-- Privacy Consent Banner -->
      <div id="privacyConsentBanner" class="privacy-consent-banner">
         <div class="privacy-content-wrapper">
@@ -1120,6 +1197,33 @@
     </div>
 
     <script>
+        // Calendly modal functions
+        function openCalendlyModal() {
+            const modal = document.getElementById('calendlyModal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+
+        function closeCalendlyModal() {
+            const modal = document.getElementById('calendlyModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto'; // Restore scrolling
+        }
+
+        // Close modal when clicking outside the content
+        document.getElementById('calendlyModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeCalendlyModal();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeCalendlyModal();
+            }
+        });
+
         // JavaScript for Gemini API integration (only Business Idea Brainstormer logic remains)
         document.addEventListener('DOMContentLoaded', () => {
             const apiKey = ""; // Canvas will automatically provide this in runtime
