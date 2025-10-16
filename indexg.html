@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redbox AI Automation</title>
+    <!-- Favicon using inline SVG -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3csvg width='36' height='36' viewBox='0 0 36 36' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3crect x='2' y='2' width='32' height='32' rx='8' fill='%234A0000'/%3e%3cpath d='M10 10H18C19.1046 10 20 10.8954 20 12V16C20 17.1046 19.1046 18 18 18H10V10Z' fill='white'/%3e%3cpath d='M10 20H22C23.1046 20 24 20.8954 24 22V24C24 25.1046 23.1046 26 22 26H10V20Z' fill='white'/%3e%3c/svg%3e">
+    <!-- Fallback PNG favicon for older browsers -->
+    <link rel="icon" type="image/png" href="favicon.png">
+    <!-- Apple touch icons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="data:image/svg+xml,%3csvg width='180' height='180' viewBox='0 0 36 36' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3crect x='2' y='2' width='32' height='32' rx='8' fill='%234A0000'/%3e%3cpath d='M10 10H18C19.1046 10 20 10.8954 20 12V16C20 17.1046 19.1046 18 18 18H10V10Z' fill='white'/%3e%3cpath d='M10 20H22C23.1046 20 24 20.8954 24 22V24C24 25.1046 23.1046 26 22 26H10V20Z' fill='white'/%3e%3c/svg%3e">
+    <!-- Social media meta images -->
+    <meta property="og:image" content="data:image/svg+xml,%3csvg width='1200' height='630' viewBox='0 0 1200 630' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='1200' height='630' fill='%23F9FAFB'/%3e%3crect x='400' y='200' width='400' height='230' rx='40' fill='%234A0000'/%3e%3cpath d='M480 280H600C610.457 280 619 288.543 619 299V339C619 349.457 610.457 358 600 358H480V280Z' fill='white'/%3e%3cpath d='M480 380H660C670.457 380 679 388.543 679 399V409C679 419.457 670.457 428 660 428H480V380Z' fill='white'/%3e%3c/svg%3e">
+    <meta name="twitter:image" content="data:image/svg+xml,%3csvg width='1200' height='630' viewBox='0 0 1200 630' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='1200' height='630' fill='%23F9FAFB'/%3e%3crect x='400' y='200' width='400' height='230' rx='40' fill='%234A0000'/%3e%3cpath d='M480 280H600C610.457 280 619 288.543 619 299V339C619 349.457 610.457 358 600 358H480V280Z' fill='white'/%3e%3cpath d='M480 380H660C670.457 380 679 388.543 679 399V409C679 419.457 670.457 428 660 428H480V380Z' fill='white'/%3e%3c/svg%3e">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Calendly Script -->
+    <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F9FAFB; /* Light off-white background for overall page */
+        }
+        /* New Dark Red Color Scheme */
+        .color-primary-dark-red {
+            color: #4A0000; /* Main dark red for backgrounds, etc. */
+        }
+        .bg-primary-dark-red {
+            background-color: #4A0000;
+        }
+        .color-accent-red {
+            color: #8B0000; /* Darker red for accents like buttons and highlighted text */
+        }
+        .bg-accent-red {
+            background-color: #8B0000;
+        }
+        .hover\:bg-accent-red-darker:hover {
+            background-color: #6A0000; /* Even darker red on hover for buttons */
+        }
+
+        /* Overriding existing styles with new red scheme */
+        .gradient-button {
+            background-image: none; /* Remove gradient */
+            background-color: #8B0000; /* Solid dark red */
+            transition: all 0.3s ease;
+        }
+        .gradient-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(139, 0, 0, 0.4); /* Red shadow on hover */
+            background-color: #6A0000; /* Darker red on hover */
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+        }
+        .ai-assistant-chat-bubble {
+            background-color: #FEE; /* Very light red for chat bubbles */
+            border-radius: 1.25rem;
+            padding: 0.75rem 1rem;
+            max-width: 80%;
+        }
+        .ai-assistant-input {
+            background-color: #ffffff;
+            border: 1px solid #F0DCDC; /* Lighter red border */
+            border-radius: 9999px;
+            padding: 0.75rem 1.25rem;
+        }
+        .loading-spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left-color: #8B0000; /* Red spinner */
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: 8px;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .choose-btn {
+            background-color: #8B0000; /* Dark red */
+            transition: background 0.3s;
+        }
+        .choose-btn:hover {
+            background-color: #6A0000; /* Darker red on hover */
+        }
+        /* Specific section background color */
+        .bg-light-red-tint {
+            background-color: #FFF5F5; /* A very light red tint */
+        }
+
+
+        /* Calendly Modal Styles */
+        .calendly-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .calendly-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .calendly-modal-content {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            max-width: 90vw;
+            max-height: 90vh;
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+        .calendly-close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: #8B0000;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+        }
+        .calendly-close-btn:hover {
+            background: #6A0000;
+        }
+        @media (min-width: 768px) {
+            .calendly-modal-content {
+                max-width: 1000px;
+                max-height: 800px;
+                height: auto;
+            }
+        }
+
+        /* Privacy Consent Banner Styles */
+        .privacy-consent-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #ffffff; /* White background for the banner */
+            padding: 1.5rem 2rem; /* Adjust padding for height */
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); /* Subtle top shadow */
+            z-index: 1000;
+            transform: translateY(100%); /* Start off-screen at the bottom */
+            opacity: 0;
+            visibility: hidden;
+            transition: transform 0.3s ease-out, opacity 0.3s ease-out, visibility 0.3s ease;
+            display: flex; /* Use flexbox for content alignment */
+            flex-direction: column; /* Stack content vertically */
+            align-items: center; /* Center content horizontally */
+            text-align: center; /* Center text within the banner */
+        }
+        .privacy-consent-banner.active {
+            transform: translateY(0);
+            opacity: 1;
+            visibility: visible;
+        }
+        .privacy-consent-banner .privacy-content-wrapper {
+            max-width: 900px; /* Max width for content inside the banner */
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .privacy-consent-banner ul {
+            padding-left: 0; /* Remove default list padding */
+            list-style-position: inside; /* Keep bullets inside */
+            text-align: center; /* Center list items */
+        }
+        /* Adjust for smaller screens */
+        @media (min-width: 768px) {
+            .privacy-consent-banner {
+                flex-direction: row; /* Horizontal layout on larger screens */
+                justify-content: center; /* Center content horizontally */
+                padding: 1rem 2rem; /* Slightly less vertical padding for a more compact bar */
+            }
+            .privacy-consent-banner .privacy-content-wrapper {
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                gap: 1.5rem; /* Space between text and button */
+            }
+            .privacy-consent-banner p, .privacy-consent-banner ul {
+                margin-bottom: 0; /* Remove bottom margin for horizontal layout */
+            }
+            .privacy-consent-banner ul {
+                text-align: left; /* Align list items left within their container */
+                list-style-position: outside;
+                padding-left: 1.25rem; /* Standard padding for list bullets */
+            }
+            .privacy-consent-banner .privacy-text-area {
+                text-align: left; /* Align text left */
+                flex-grow: 1; /* Allow text area to grow */
+            }
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <!-- Top Banner -->
+    <div class="w-full bg-primary-dark-red text-white text-center py-2 text-sm font-medium">
+        Early customers are entitled to a new customer deal!
+    </div>
+
+    <!-- Navbar -->
+    <nav class="bg-white shadow-sm py-4 px-6 md:px-12 flex justify-start items-center">
+        <!-- Redbox Logo (SVG) -->
+        <div class="flex items-center">
+            <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" class="mr-2">
+                <rect x="2" y="2" width="32" height="32" rx="8" fill="#4A0000"/> <!-- Dark red wine background for the box -->
+                <path d="M10 10H18C19.1046 10 20 10.8954 20 12V16C20 17.1046 19.1046 18 18 18H10V10Z" fill="white"/>
+                <path d="M10 20H22C23.1046 20 24 20.8954 24 22V24C24 25.1046 23.1046 26 22 26H10V20Z" fill="white"/>
+            </svg>
+            <div class="text-2xl font-bold text-gray-900">Redbox</div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative bg-white py-16 md:py-24 text-center overflow-hidden">
+        <div class="max-w-4xl mx-auto px-6">
+            <h1 class="text-4xl md:text-6xl font-extrabold leading-tight text-gray-900 mb-6">
+                Automate Your Business with <span class="color-accent-red">Redbox</span>
+            </h1>
+            <p class="text-lg md:text-xl text-gray-600 mb-10 max-w-2xl mx-auto">
+                From capturing new leads to managing bookings and client reminders, our AI tools work 24/7 to keep your business running smoothly.
+            </p>
+            <button onclick="openCalendlyModal()" class="gradient-button text-white font-semibold py-3 px-8 rounded-full text-lg shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">
+                Let's Talk
+            </button>
+        </div>
+    </section>
+
+    <!-- Live Demo / AI Assistant UI Placeholder -->
+    <section class="py-16 md:py-24 bg-gray-50">
+        <div class="max-w-5xl mx-auto px-6 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-12">Meet our Website Assistant — built for Redbox.</h2>
+            <p class="text-lg text-gray-600 mb-8">It knows our business inside and out. You can ask it anything, book a call, or learn how we can help all through the chat. It’s live on this page so you can see exactly what it’s capable of. Saving us time and showing you what’s possible in your business.</p>
+            <div class="">
+              <iframe
+                class="w-full"
+                src="https://redboxwebassistant.netlify.app/"
+                title="Redbox AI Chatbot"
+                width="100%"
+                height="650"
+                style="border: none; border-radius: 1.5rem; overflow: hidden;"
+                allow="clipboard-write; microphone; camera"
+              ></iframe>
+            </div>
+        </div>
+    </section>
+
+<!-- What We Automate Section -->
+<section class="py-16 md:py-24 bg-white">
+  <div class="max-w-6xl mx-auto px-6 text-center">
+    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-12">
+      What Our Smart Assistants Can Do For You
+    </h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <!-- Feature Card 1: Automated Bookings & Reminders -->
+      <div
+        class="bg-gray-50 p-8 rounded-xl shadow-md card-hover transition-all duration-300 border border-gray-200"
+      >
+        <div class="color-accent-red mb-4">
+          <svg
+            class="w-12 h-12 mx-auto"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2zm3-13h.01M13 13h.01"
+            ></path>
+          </svg>
+        </div>
+        <h3 class="text-xl font-semibold text-gray-900 mb-3">
+          Automated Bookings & Reminders
+        </h3>
+        <p class="text-gray-600 mb-4">
+          Seamlessly manage appointments, sync with calendars, and send
+          automated confirmations and reminders—so you never miss a client.
+        </p>
+      </div>
+      <!-- Feature Card 2: Lead Capture & Qualification -->
+      <div
+        class="bg-gray-50 p-8 rounded-xl shadow-md card-hover transition-all duration-300 border border-gray-200"
+      >
+        <div class="color-accent-red mb-4">
+          <svg
+            class="w-12 h-12 mx-auto"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"
+            ></path>
+          </svg>
+        </div>
+        <h3 class="text-xl font-semibold text-gray-900 mb-3">
+          Lead Capture & Qualification
+        </h3>
+        <p class="text-gray-600 mb-4">
+          Automatically capture new leads, qualify them with smart questions,
+          and deliver the best opportunities straight to your inbox.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+    <!-- How It Works Section -->
+    <section class="py-16 md:py-24 bg-light-red-tint">
+        <div class="max-w-6xl mx-auto px-6 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-12">Our Simple Process</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Step 1 -->
+                <div class="p-6 rounded-xl border border-gray-200 shadow-sm">
+                    <div class="w-16 h-16 mx-auto bg-accent-red rounded-full flex items-center justify-center mb-4">
+                        <span class="text-3xl font-bold text-white">1</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">We Talk & Understand</h3>
+                    <p class="text-gray-600">
+                        We start with a comprehensive discussion to grasp your specific business needs, automation goals, and any website or custom form requirements.
+                    </p>
+                </div>
+                <!-- Step 2 -->
+                <div class="p-6 rounded-xl border border-gray-200 shadow-sm">
+                    <div class="w-16 h-16 mx-auto bg-accent-red rounded-full flex items-center justify-center mb-4">
+                        <span class="text-3xl font-bold text-white">2</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">We Build & Integrate</h3>
+                    <p class="text-gray-600">
+                        Our experts then design, deploy, and integrate custom AI assistants, build your website, forms, or admin portals tailored precisely to your specifications.
+                    </p>
+                </div>
+                <!-- Step 3 -->
+                <div class="p-6 rounded-xl border border-gray-200 shadow-sm">
+                    <div class="w-16 h-16 mx-auto bg-accent-red rounded-full flex items-center justify-center mb-4">
+                        <span class="text-3xl font-bold text-white">3</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">You Relax & Grow</h3>
+                    <p class="text-gray-600">
+                        Enjoy the benefits of 24/7 automated efficiency, qualified leads, and streamlined operations. Our AI even helps us qualify and book chats with you!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Multi-Channel Communication & Booking Section -->
+    <!-- <section class="relative py-16 md:py-24 bg-indigo-50 overflow-hidden">
+        <div class="max-w-6xl mx-auto px-6 text-center relative z-10">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-12">Seamless Communication Across All Channels</h2>
+            <p class="text-lg text-gray-700 mb-10 max-w-3xl mx-auto">
+                Your Redbox AI assistant works tirelessly across every platform, ensuring no customer goes unanswered and every opportunity is captured.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 text-left">
+                <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-200">
+                    <div class="text-indigo-600 mb-4 text-5xl">📞</div> 
+                    <h3 class="text-2xl font-semibold text-gray-900 mb-4">24/7 SMS & Phone Call Assistant</h3>
+                    <p class="text-gray-700 mb-4">
+                        Imagine an assistant that takes calls and handles SMS inquiries around the clock. Our AI gathers crucial information, answers questions, and qualifises leads, even when you're offline.
+                    </p>
+                    <p class="text-gray-700">
+                        Should a conversation require a human touch, the AI intelligently escalates the issue, notifying you with all the necessary details so you can step in and provide personalised support exactly when needed.
+                    </p>
+                </div>
+
+                <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-200">
+                    <div class="text-indigo-600 mb-4 text-5xl">📱</div> 
+                    <h3 class="text-2xl font-semibold text-gray-900 mb-4">Automated WhatsApp & Messenger</h3>
+                    <p class="text-gray-700 mb-4">
+                        Eliminate the need to communicate with every customer individually on WhatsApp and Facebook Messenger. Our AI handles conversations, provides instant responses, and guides customers through their journey.
+                    </p>
+                    <p class="text-gray-700">
+                        Just like with calls and SMS, if a situation escalates or requires your direct attention, you'll be promptly notified with the full context, allowing you to seamlessly take over the conversation.
+                    </p>
+                </div>
+
+                
+                <div class="md:col-span-2 bg-white p-8 rounded-xl shadow-lg border border-gray-200">
+                    <div class="text-indigo-600 mb-4 text-5xl">🗓️</div> 
+                    <h3 class="text-2xl font-semibold text-gray-900 mb-4">Direct Booking into Your Google Calendar</h3>
+                    <p class="text-gray-700 mb-4">
+                        Our AI assistants can directly book appointments into your Google Calendar, integrating seamlessly with your Gmail. This means clients can book a chat with you from anywhere, at any time, via your website, SMS, phone number, or WhatsApp.
+                    </p>
+                    <p class="text-gray-700">
+                        Whether they need a full consultation or just a quick booking, the AI handles the entire scheduling process, automating your calendar and ensuring you never miss an opportunity. We can also build custom admin portals for you to manage all client interactions.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section> -->
+
+    
+<!-- <section class="relative py-16 md:py-24 bg-[#F3EEFF] overflow-hidden">
+    <div class="max-w-6xl mx-auto px-6 text-center relative z-10">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-12">Seamless Communication Across All Channels</h2>
+        <p class="text-lg text-gray-700 mb-10 max-w-3xl mx-auto">
+            Your Redbox AI assistant works tirelessly across every platform, ensuring no customer goes unanswered and every opportunity is captured.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
+            <div class="bg-white p-8 rounded-2xl shadow-[0_4px_6px_rgba(0,0,0,0.05),_0_10px_15px_rgba(0,0,0,0.1)] border border-gray-200 transition-transform duration-200 hover:-translate-y-1">
+                <div class="text-indigo-600 mb-4 text-[3.5rem] leading-none">📞</div> <h3 class="text-2xl font-semibold text-gray-900 mb-4">24/7 SMS & Phone Call Assistant</h3>
+                <p class="text-gray-700 mb-4">
+                    Imagine an assistant that takes calls and handles SMS inquiries around the clock. Our AI gathers crucial information, answers questions, and qualifises leads, even when you're offline.
+                </p>
+                <p class="text-gray-700">
+                    Should a conversation require a human touch, the AI intelligently escalates the issue, notifying you with all the necessary details so you can step in and provide personalised support exactly when needed.
+                </p>
+            </div>
+
+            <div class="bg-white p-8 rounded-2xl shadow-[0_4px_6px_rgba(0,0,0,0.05),_0_10px_15px_rgba(0,0,0,0.1)] border border-gray-200 transition-transform duration-200 hover:-translate-y-1">
+                <div class="text-indigo-600 mb-4 text-[3.5rem] leading-none">📱</div> <h3 class="text-2xl font-semibold text-gray-900 mb-4">Automated WhatsApp & Messenger</h3>
+                <p class="text-gray-700 mb-4">
+                    Eliminate the need to communicate with every customer individually on WhatsApp and Facebook Messenger. Our AI handles conversations, provides instant responses, and guides customers through their journey.
+                </p>
+                <p class="text-gray-700">
+                    Just like with calls and SMS, if a situation escalates or requires your direct attention, you'll be promptly notified with the full context, allowing you to seamlessly take over the conversation.
+                </p>
+            </div>
+
+            <div class="md:col-span-2 bg-white p-8 rounded-2xl shadow-[0_4px_6px_rgba(0,0,0,0.05),_0_10px_15px_rgba(0,0,0,0.1)] border border-gray-200 transition-transform duration-200 hover:-translate-y-1">
+                <div class="text-indigo-600 mb-4 text-[3.5rem] leading-none">🗓️</div> <h3 class="text-2xl font-semibold text-gray-900 mb-4">Direct Booking into Your Google Calendar</h3>
+                <p class="text-gray-700 mb-4">
+                    Our AI assistants can directly book appointments into your Google Calendar, integrating seamlessly with your Gmail. This means clients can book a chat with you from anywhere, at any time, via your website, SMS, phone number, or WhatsApp.
+                </p>
+                <p class="text-gray-700">
+                    Whether they need a full consultation or just a quick booking, the AI handles the entire scheduling process, automating your calendar and ensuring you never miss an opportunity. We can also build custom admin portals for you to manage all client interactions.
+                </p>
+            </div>
+        </div>
+    </div>
+</section> -->
+
+    <!-- Final CTA Section -->
+    <section class="bg-white py-16 md:py-24 text-center">
+        <div class="max-w-3xl mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-8">Ready to Transform Your Business?</h2>
+            <p class="text-lg text-gray-600 mb-10">
+                Discover how Redbox AI automation can revolutionise your customer interactions, operational efficiency, and lead generation. Click below to chat with our AI assistant and book your consultation.
+            </p>
+            <button onclick="openCalendlyModal()" class="gradient-button text-white font-semibold py-3 px-8 rounded-full text-lg shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">
+                Let's Talk
+            </button>
+        </div>
+    </section>
+
+    <section class=" bg-white">
+        <div class="container mx-auto ">
+            <!-- <h2 class="text-4xl font-bold text-center mb-12" style="color: #333;">
+                Flexible AI Automation Pricing
+            </h2>
+    
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+    
+                <div class="bg-white p-8 rounded-lg shadow-lg flex flex-col items-center border border-gray-200">
+                    <h3 class="text-2xl font-bold mb-4" style="color: #333;">Starter AI Automation</h3>
+                    <div class="text-center mb-6">
+                        <p class="text-5xl font-extrabold" style="color: #6a0dad;">&euro;349</p>
+                        <p class="text-gray-600 text-lg">/month</p>
+                    </div>
+                    <p class="text-gray-600 mb-6 text-lg">Setup Fee: <span class="font-semibold">&euro;149</span></p>
+                    <ul class="text-gray-700 space-y-3 mb-8 text-lg text-left w-full">
+                        <li class="flex items-center">
+                            <svg class="w-6 h-6 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            Platform Base Subscription
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-6 h-6 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            Custom Booking Form
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-6 h-6 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            AI Assistant (Website)
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-6 h-6 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            Emails to Business Owner
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-6 h-6 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            Emails to Customers
+                        </li>
+                    </ul>
+                    <a href="#" class="choose-btn mt-auto py-3 px-8 rounded-full text-white font-semibold transition duration-300 ease-in-out">
+                        Choose Starter
+                    </a>
+                </div>
+    
+                <div class="bg-white p-8 rounded-lg shadow-lg flex flex-col items-center border border-gray-200 transform scale-105 relative z-10" style="border-color: #6a0dad;">
+                    <div class="absolute -top-4 px-3 py-1 bg-yellow-400 text-yellow-900 text-sm font-semibold rounded-full">Most Popular</div>
+                    <h3 class="text-2xl font-bold mb-4" style="color: #333;">Growth AI Ops</h3>
+                    <div class="text-center mb-6">
+                        <p class="text-5xl font-extrabold" style="color: #6a0dad;">&euro;499</p>
+                        <p class="text-gray-600 text-lg">/month</p>
+                    </div>
+                    <p class="text-gray-600 mb-6 text-lg">Setup Fee: <span class="font-semibold">&euro;199</span></p>
+                    <ul class="text-gray-700 space-y-3 mb-8 text-lg text-left w-full">
+                        <li class="flex items-center">
+                            <svg class="w-6 h-6 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            Starter Package features
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-6 h-6 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            WhatsApp AI Assistant
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-6 h-6 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            Admin Dashboard
+                        </li>
+                    </ul>
+                    <a href="#" class="choose-btn mt-auto py-3 px-8 rounded-full text-white font-semibold transition duration-300 ease-in-out">
+                        Choose Growth
+                    </a>
+                </div>
+    
+                <div class="bg-white p-8 rounded-lg shadow-lg flex flex-col items-center border border-gray-200">
+                    <h3 class="text-2xl font-bold mb-4" style="color: #333;">Elite AI Ops</h3>
+                    <div class="text-center mb-6">
+                        <p class="text-5xl font-extrabold" style="color: #6a0dad;">&euro;799</p>
+                        <p class="text-gray-600 text-lg">/month</p>
+                    </div>
+                    <p class="text-gray-600 mb-6 text-lg">Setup Fee: <span class="font-semibold">&euro;299</span></p>
+                    <ul class="text-gray-700 space-y-3 mb-8 text-lg text-left w-full">
+                        <li class="flex items-center">
+                            <svg class="w-6 h-6 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            Growth Package features
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-6 h-6 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            Voice Assistant (Phone Bot)
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-6 h-6 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            All Channels Bundle (Web + WA + IG + FB)
+                        </li>
+                    </ul>
+                    <a href="#" class="choose-btn mt-auto py-3 px-8 rounded-full text-white font-semibold transition duration-300 ease-in-out">
+                        Choose Elite
+                    </a>
+                </div>
+            </div> -->
+
+
+
+            <!-- <h2 class="text-4xl font-bold text-center mb-12" style="color: #333;">
+                Flexible AI Automation Packages
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+
+                <div class="bg-white p-8 rounded-lg shadow-lg flex flex-col items-center border border-gray-200">
+                    <h3 class="text-2xl font-bold mb-4" style="color: #333;">Business Essentials</h3>
+                    <div class="text-center mb-6">
+                        <p class="text-4xl font-extrabold" style="color: #6a0dad;">&euro;499-599</p>
+                        <p class="text-gray-600 text-lg">/month</p>
+                    </div>
+                    <p class="text-gray-600 mb-6 text-lg">Setup Fee: <span class="font-semibold">€299</span></p>
+                    <ul class="text-gray-700 space-y-3 mb-8 text-lg text-left w-full">
+                        <li class="flex items-center">
+                            <svg class="w-6 h-6 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            Platform Base + Hosting
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-6 h-6 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            Website or Landing Page (from &euro;99/month)
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-6 h-6 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            Smart Booking Form
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-6 h-6 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            Admin Dashboard
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-6 h-6 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            Emails Notifications
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-6 h-6 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            SMS Bundle
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-6 h-6 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            Calendar Integration
+                        </li>
+                    </ul>
+                    <a href="#" class="choose-btn mt-auto py-3 px-8 rounded-full text-white font-semibold transition duration-300 ease-in-out">
+                        Learn More
+                    </a>
+                </div>
+
+                <div class="bg-white p-8 rounded-lg shadow-lg flex flex-col items-center border border-gray-200 transform scale-105 relative z-10" style="border-color: #6a0dad;">
+                    <div class="absolute -top-4 px-3 py-1 bg-yellow-400 text-yellow-900 text-sm font-semibold rounded-full">Most Popular</div>
+                    <h3 class="text-2xl font-bold mb-4" style="color: #333;">AI Enhanced Automation</h3>
+                    <div class="text-center mb-6">
+                        <p class="text-4xl font-extrabold" style="color: #6a0dad;">&euro;699-999</p>
+                        <p class="text-gray-600 text-lg">/month (Est.)</p>
+                    </div>
+                    <p class="text-gray-600 mb-6 text-lg">Setup Fee: <span class="font-semibold">€399</span></p>
+                    <ul class="text-gray-700 space-y-3 mb-8 text-lg text-left w-full">
+                        <li class="flex items-center">
+                            <svg class="w-6 h-6 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            Everything in Business Essentials
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-6 h-6 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            AI Website Assistant
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-6 h-6 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            Integrated AI Assistant
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-6 h-6 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            Custom Knowledge Base
+                        </li>
+                         <li class="flex items-center">
+                            <svg class="w-6 h-6 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            Escalation System
+                        </li>
+                    </ul>
+                    <a href="#" class="choose-btn mt-auto py-3 px-8 rounded-full text-white font-semibold transition duration-300 ease-in-out">
+                        Choose AI Enhanced
+                    </a>
+                </div>
+
+                <div class="bg-white p-8 rounded-lg shadow-lg flex flex-col items-center border border-gray-200">
+                    <h3 class="text-2xl font-bold mb-4" style="color: #333;">Full AI Ops</h3>
+                    <div class="text-center mb-6">
+                        <p class="text-4xl font-extrabold" style="color: #6a0dad;">&euro;999+</p>
+                        <p class="text-gray-600 text-lg">/month (Est.)</p>
+                    </div>
+                    <p class="text-gray-600 mb-6 text-lg">Setup Fee: <span class="font-semibold">€599</span></p>
+                    <ul class="text-gray-700 space-y-3 mb-8 text-lg text-left w-full">
+                        <li class="flex items-center">
+                            <svg class="w-6 h-6 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            Everything in Ai Enhanced
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-6 h-6 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            Voice Phone Assistant
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-6 h-6 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            All Channels Bundle (Web + WhatsApp + Instagram + Facebook)
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-6 h-6 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            Custom Website (5-10 pages)
+                        </li>
+                         <li class="flex items-center">
+                            <svg class="w-6 h-6 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            Priority Support
+                        </li>
+                    </ul>
+                    <a href="#" class="choose-btn mt-auto py-3 px-8 rounded-full text-white font-semibold transition duration-300 ease-in-out">
+                        Choose Full AI Ops
+                    </a>
+                </div>
+            </div> -->
+    
+            <!-- <h2 class="text-4xl font-bold text-center mb-12" style="color: #333;">
+                Modular Pricing Breakdown
+            </h2>
+            <div class="overflow-x-auto">
+                <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow-lg">
+                    <thead>
+                        <tr class="bg-gray-50 border-b">
+                            <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Feature</th>
+                            <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Monthly Price (€)</th>
+                            <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Setup Fee (€)</th>
+                            <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 whitespace-nowrap text-lg font-medium text-gray-900">Platform Base Subscription</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg text-gray-700">149</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg text-gray-700">99</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg text-gray-500">Core infra, hosting, support</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 whitespace-nowrap text-lg font-medium text-gray-900">Custom Booking Form</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg text-gray-700">99</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg text-gray-700">99</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg text-gray-500">Advanced rules, logic, branding</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 whitespace-nowrap text-lg font-medium text-gray-900">Admin Dashboard (Basic)</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg text-gray-700">129</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg text-gray-700">149</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg text-gray-500">Bookings & task view</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 whitespace-nowrap text-lg font-medium text-gray-900">Custom Functionality (per function)</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg text-gray-700">+50 – 150</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg text-gray-700">99</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg text-gray-500">Automations, workflows, reporting</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 whitespace-nowrap text-lg font-medium text-gray-900">Custom Landing Page</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg text-gray-700">49</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg text-gray-700">99</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg text-gray-500">Security, hosting, update requests</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 whitespace-nowrap text-lg font-medium text-gray-900">Custom Website</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg text-gray-700">79</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg text-gray-700">99</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg text-gray-500">5 - 10 pages, hosting, update requests</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 whitespace-nowrap text-lg font-medium text-gray-900">AI Assistant – Website</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg text-gray-700">199</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg text-gray-700">99</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg text-gray-500">FAQ, booking, leads</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 whitespace-nowrap text-lg font-medium text-gray-900">AI Assistant – WhatsApp</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg text-gray-700">149</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg text-gray-700">99</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg text-gray-500">WhatsApp Business integration</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 whitespace-nowrap text-lg font-medium text-gray-900">AI Assistant – Instagram</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg text-gray-700">129</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg text-gray-700">99</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg text-gray-500">IG DM automation</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 whitespace-nowrap text-lg font-medium text-gray-900">AI Assistant – Messenger</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg text-gray-700">119</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg text-gray-700">99</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg text-gray-500">FB Messenger assistant</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 whitespace-nowrap text-lg font-medium text-gray-900">All Channels Bundle</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg text-gray-700">399</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg text-gray-700">299</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg text-gray-500">Web + WhatsApp + Instagram + FB</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 whitespace-nowrap text-lg font-medium text-gray-900">Voice Assistant (Phone Assistant)</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg text-gray-700">199</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg text-gray-700">299</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg text-gray-500">Phone call bookings, lead capture</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 whitespace-nowrap text-lg font-medium text-gray-900">Emails to Business Owner</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg text-gray-700">19</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg text-gray-700">–</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg text-gray-500">Notifications, reminders</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 whitespace-nowrap text-lg font-medium text-gray-900">Emails to Customers</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg text-gray-700">29</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg text-gray-700">–</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg text-gray-500">Confirmations, reminders, reviews</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 whitespace-nowrap text-lg font-medium text-gray-900">Google Calendar Sync</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg text-gray-700">29</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg text-gray-700">–</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg text-gray-500">Bookings, Availability</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 whitespace-nowrap text-lg font-medium text-gray-900">SMS to Customers</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg text-gray-700">&euro;0.08/msg</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg text-gray-700">–</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-lg text-gray-500">Pass-through or markup</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div> -->
+            <!-- <h2 class="text-4xl font-bold text-center mb-12" style="color: #333;">
+                Modular AI Automation Pricing
+            </h2>
+            <div class="overflow-x-auto">
+              <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow-lg">
+                <thead>
+                  <tr class="bg-gray-50 border-b">
+                    <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Feature</th>
+                    <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Monthly (€)</th>
+                    <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Setup (€)</th>
+                    <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Notes</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200">
+            
+                  <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-4 whitespace-nowrap text-lg font-medium text-gray-900">Platform Base Subscription</td>
+                    <td class="px-6 py-4 text-lg text-gray-700">149</td>
+                    <td class="px-6 py-4 text-lg text-gray-700">99</td>
+                    <td class="px-6 py-4 text-lg text-gray-500">Core infra, hosting, support</td>
+                  </tr>
+            
+        
+            
+                  <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-4 text-lg font-medium text-gray-900">AI Assistant – Website</td>
+                    <td class="px-6 py-4 text-lg text-gray-700">299</td>
+                    <td class="px-6 py-4 text-lg text-gray-700">99</td>
+                    <td class="px-6 py-4 text-lg text-gray-500">FAQ, booking, leads capture, Custom Knowledge Base</td>
+                  </tr>
+            
+                  <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-4 text-lg font-medium text-gray-900">Integrated AI Assitant</td>
+                    <td class="px-6 py-4 text-lg text-gray-700">199</td>
+                    <td class="px-6 py-4 text-lg text-gray-700">149</td>
+                    <td class="px-6 py-4 text-lg text-gray-500">WhatsApp / Insta / FB Messenger integration</td>
+                  </tr>
+            
+                  <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-4 text-lg font-medium text-gray-900">All Channels Bundle</td>
+                    <td class="px-6 py-4 text-lg text-gray-700">599</td>
+                    <td class="px-6 py-4 text-lg text-gray-700">299</td>
+                    <td class="px-6 py-4 text-lg text-gray-500">Web + WhatsApp + Insta + FB Messenger</td>
+                  </tr>
+            
+                  <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-4 text-lg font-medium text-gray-900">Voice Assistant (Phone)</td>
+                    <td class="px-6 py-4 text-lg text-gray-700">399</td>
+                    <td class="px-6 py-4 text-lg text-gray-700">299</td>
+                    <td class="px-6 py-4 text-lg text-gray-500">Phone bookings, lead capture</td>
+                  </tr>
+
+                  <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-4 text-lg font-medium text-gray-900">Custom Landing Page</td>
+                    <td class="px-6 py-4 text-lg text-gray-700">99</td>
+                    <td class="px-6 py-4 text-lg text-gray-700">199</td>
+                    <td class="px-6 py-4 text-lg text-gray-500">Design, security, hosting, updates</td>
+                  </tr>
+
+                  <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-4 text-lg font-medium text-gray-900">Custom Website</td>
+                    <td class="px-6 py-4 text-lg text-gray-700">199</td>
+                    <td class="px-6 py-4 text-lg text-gray-700">299</td>
+                    <td class="px-6 py-4 text-lg text-gray-500">5-10 pages, hosting, ongoing updates</td>
+                  </tr>
+
+                  <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-4 text-lg font-medium text-gray-900">Smart Booking Form</td>
+                    <td class="px-6 py-4 text-lg text-gray-700">149</td>
+                    <td class="px-6 py-4 text-lg text-gray-700">99</td>
+                    <td class="px-6 py-4 text-lg text-gray-500">Advanced rules, logic, branding</td>
+                  </tr>
+            
+                  <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-4 text-lg font-medium text-gray-900">Admin Dashboard (Basic)</td>
+                    <td class="px-6 py-4 text-lg text-gray-700">149</td>
+                    <td class="px-6 py-4 text-lg text-gray-700">99</td>
+                    <td class="px-6 py-4 text-lg text-gray-500">Secure Bookings & task view</td>
+                  </tr>
+                  
+            
+                  <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-4 text-lg font-medium text-gray-900">Custom workflow (per function)</td>
+                    <td class="px-6 py-4 text-lg text-gray-700">99</td>
+                    <td class="px-6 py-4 text-lg text-gray-700">99</td>
+                    <td class="px-6 py-4 text-lg text-gray-500">Automations, workflows, reporting</td>
+                  </tr>
+            
+                  <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-4 text-lg font-medium text-gray-900">Email Notifications</td>
+                    <td class="px-6 py-4 text-lg text-gray-700">39</td>
+                    <td class="px-6 py-4 text-lg text-gray-700">–</td>
+                    <td class="px-6 py-4 text-lg text-gray-500">Notifications, reminders</td>
+                  </tr>
+            
+                  <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-4 text-lg font-medium text-gray-900">Google Calendar Sync</td>
+                    <td class="px-6 py-4 text-lg text-gray-700">29</td>
+                    <td class="px-6 py-4 text-lg text-gray-700">–</td>
+                    <td class="px-6 py-4 text-lg text-gray-500">Bookings, Availability</td>
+                  </tr>
+                  
+                  <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-4 text-lg font-medium text-gray-900">SMS Bundle</td>
+                    <td class="px-6 py-4 text-lg text-gray-700">24</td>
+                    <td class="px-6 py-4 text-lg text-gray-700">–</td>
+                    <td class="px-6 py-4 text-lg text-gray-500">300 msgs, €0.10/msg after</td>
+                  </tr>
+            
+                </tbody>
+              </table>
+            </div> -->
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <!-- <section class="py-16 md:py-24 bg-gray-50">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="mb-8">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 text-center mb-6">Testimonials</h2>
+                <div class="flex justify-center space-x-4">
+                    <button id="prev-testimonial" class="w-12 h-12 rounded-full border border-indigo-300 text-indigo-600 flex items-center justify-center hover:bg-indigo-50 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                        </svg>
+                    </button>
+                    <button id="next-testimonial" class="w-12 h-12 rounded-full border border-indigo-300 text-indigo-600 flex items-center justify-center hover:bg-indigo-50 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <p class="text-lg text-gray-600 mb-10 max-w-3xl mx-auto text-center">
+                Don't just take our word for it. See how Redbox AI has helped businesses like yours streamline operations, enhance customer experience, and drive growth.
+            </p>
+
+            <div class="relative">
+                <div id="testimonials-carousel" class="flex overflow-x-hidden snap-x snap-mandatory scroll-smooth py-4 -mx-4 md:-mx-8 lg:-mx-10">
+                    <div class="flex-none w-full md:w-1/2 lg:w-1/3 px-4 md:px-8 lg:px-10 snap-center">
+                        <div class="bg-white p-8 rounded-xl shadow-lg card-hover transition-all duration-300 border border-indigo-200 flex flex-col justify-between h-full">
+                            <div class="mb-4">
+                                <div class="flex text-yellow-400 mb-3">
+                                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                                </div>
+                                <p class="text-gray-700 text-lg mb-4">
+                                    "Redbox AI completely transformed our booking system. We've seen a significant reduction in missed appointments and our team now has so much more time to focus on what they do best – servicing cars!"
+                                </p>
+                            </div>
+                            <div class="flex items-center">
+                                <img src="https://placehold.co/48x48/6B46C1/ffffff?text=JO" alt="John O'Connell" class="w-12 h-12 rounded-full mr-4 object-cover border border-gray-200"/>
+                                <div>
+                                    <p class="font-semibold text-gray-900 text-lg">John O'Connell</p>
+                                    <p class="text-gray-600 text-sm">Owner, The Garage Dunboyne</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex-none w-full md:w-1/2 lg:w-1/3 px-4 md:px-8 lg:px-10 snap-center">
+                        <div class="bg-white p-8 rounded-xl shadow-lg card-hover transition-all duration-300 border border-indigo-200 flex flex-col justify-between h-full">
+                            <div class="mb-4">
+                                <div class="flex text-yellow-400 mb-3">
+                                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                                </div>
+                                <p class="text-gray-700 text-lg mb-4">
+                                    "Handling inquiries manually was a huge bottleneck. Redbox AI's assistant now manages all initial client contact and scheduling, allowing our engineers to dedicate their time to projects, not paperwork."
+                                </p>
+                            </div>
+                            <div class="flex items-center">
+                                <img src="https://placehold.co/48x48/6B46C1/ffffff?text=SL" alt="Sarah Lynch" class="w-12 h-12 rounded-full mr-4 object-cover border border-gray-200"/>
+                                <div>
+                                    <p class="font-semibold text-gray-900 text-lg">Sarah Lynch</p>
+                                    <p class="text-gray-600 text-sm">Operations Manager, Fluid Vacuum Engineering</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex-none w-full md:w-1/2 lg:w-1/3 px-4 md:px-8 lg:px-10 snap-center">
+                        <div class="bg-white p-8 rounded-xl shadow-lg card-hover transition-all duration-300 border border-indigo-200 flex flex-col justify-between h-full">
+                            <div class="mb-4">
+                                <div class="flex text-yellow-400 mb-3">
+                                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                                </div>
+                                <p class="text-gray-700 text-lg mb-4">
+                                    "The AI assistant from Redbox has made our client onboarding process incredibly smooth. From collecting documents to providing status updates, it handles everything efficiently, improving client satisfaction."
+                                </p>
+                            </div>
+                            <div class="flex items-center">
+                                <img src="https://placehold.co/48x48/6B46C1/ffffff?text=DK" alt="David Kelly" class="w-12 h-12 rounded-full mr-4 object-cover border border-gray-200"/>
+                                <div>
+                                    <p class="font-semibold text-gray-900 text-lg">David Kelly</p>
+                                    <p class="text-gray-600 text-sm">Founder, Voluntary Strike Off</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex-none w-full md:w-1/2 lg:w-1/3 px-4 md:px-8 lg:px-10 snap-center">
+                        <div class="bg-white p-8 rounded-xl shadow-lg card-hover transition-all duration-300 border border-indigo-200 flex flex-col justify-between h-full">
+                            <div class="mb-4">
+                                <div class="flex text-yellow-400 mb-3">
+                                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                                </div>
+                                <p class="text-gray-700 text-lg mb-4">
+                                    "As a busy salon owner, I needed a solution for constant booking calls. Redbox AI set up an intelligent assistant that handles all appointments, freeing me up to focus on my clients. It's been a game-changer!"
+                                </p>
+                            </div>
+                            <div class="flex items-center">
+                                <img src="https://placehold.co/48x48/6B46C1/ffffff?text=AB" alt="Aoife Byrne" class="w-12 h-12 rounded-full mr-4 object-cover border border-gray-200"/>
+                                <div>
+                                    <p class="font-semibold text-gray-900 text-lg">Aoife Byrne</p>
+                                    <p class="text-gray-600 text-sm">Owner, 'The Style Spot' Salon</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex-none w-full md:w-1/2 lg:w-1/3 px-4 md:px-8 lg:px-10 snap-center">
+                        <div class="bg-white p-8 rounded-xl shadow-lg card-hover transition-all duration-300 border border-indigo-200 flex flex-col justify-between h-full">
+                            <div class="mb-4">
+                                <div class="flex text-yellow-400 mb-3">
+                                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                                </div>
+                                <p class="text-gray-700 text-lg mb-4">
+                                    "Our e-commerce site gets hundreds of queries daily. The Redbox AI assistant now answers most of them instantly, drastically reducing our customer service load and improving response times. Highly recommend!"
+                                </p>
+                            </div>
+                            <div class="flex items-center">
+                                <img src="https://placehold.co/48x48/6B46C1/ffffff?text=MT" alt="Mark Thompson" class="w-12 h-12 rounded-full mr-4 object-cover border border-gray-200"/>
+                                <div>
+                                    <p class="font-semibold text-gray-900 text-lg">Mark Thompson</p>
+                                    <p class="text-gray-600 text-sm">Co-founder, 'Gadget Hub' Online Store</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex-none w-full md:w-1/2 lg:w-1/3 px-4 md:px-8 lg:px-10 snap-center">
+                        <div class="bg-white p-8 rounded-xl shadow-lg card-hover transition-all duration-300 border border-indigo-200 flex flex-col justify-between h-full">
+                            <div class="mb-4">
+                                <div class="flex text-yellow-400 mb-3">
+                                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                                </div>
+                                <p class="text-gray-700 text-lg mb-4">
+                                    "Qualifying leads used to be a time-consuming process. With Redbox AI, our assistant pre-screens potential clients, so we only engage with genuinely interested prospects. It's incredibly efficient."
+                                </p>
+                            </div>
+                            <div class="flex items-center">
+                                <img src="https://placehold.co/48x48/6B46C1/ffffff?text=FG" alt="Fiona Gallagher" class="w-12 h-12 rounded-full mr-4 object-cover border border-gray-200"/>
+                                <div>
+                                    <p class="font-semibold text-gray-900 text-lg">Fiona Gallagher</p>
+                                    <p class="text-gray-600 text-sm">Senior Advisor, 'Insight Financial'</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> -->
+
+    <!-- Footer (Basic) -->
+    <footer class="bg-primary-dark-red text-white py-8">
+        <div class="max-w-6xl mx-auto px-6 text-center">
+            <div class="flex flex-col md:flex-row justify-center items-center mb-4">
+                <!-- Redbox Logo (SVG) in Footer -->
+                <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" class="mr-2 mb-2 md:mb-0">
+                    <rect x="2" y="2" width="32" height="32" rx="8" fill="white"/> <!-- White background for the box -->
+                    <path d="M10 10H18C19.1046 10 20 10.8954 20 12V16C20 17.1046 19.1046 18 18 18H10V10Z" fill="#4A0000"/>
+                    <path d="M10 20H22C23.1046 20 24 20.8954 24 22V24C24 25.1046 23.1046 26 22 26H10V20Z" fill="#4A0000"/>
+                </svg>
+                <span class="text-xl font-semibold">Redbox AI Automation</span>
+            </div>
+            <p class="text-sm text-gray-300">&copy; 2024 Redbox AI. All rights reserved.</p>
+            <div class="flex justify-center space-x-4 mt-4 text-sm">
+                <a href="#" class="text-gray-300 hover:text-white transition-colors duration-200">Privacy Policy</a>
+                <a href="#" class="text-gray-300 hover:text-white transition-colors duration-200">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+     <!-- Calendly Modal -->
+     <div id="calendlyModal" class="calendly-modal">
+        <div class="calendly-modal-content">
+            <button onclick="closeCalendlyModal()" class="calendly-close-btn">&times;</button>
+            <!-- Calendly inline widget begin -->
+            <div class="calendly-inline-widget" data-url="https://calendly.com/rdancole-vyuj/quick-chat?hide_event_type_details=1&hide_gdpr_banner=1" style="min-width:320px;height:700px;"></div>
+            <!-- Calendly inline widget end -->
+        </div>
+    </div>
+
+     <!-- Privacy Consent Banner -->
+     <div id="privacyConsentBanner" class="privacy-consent-banner">
+        <div class="privacy-content-wrapper">
+            <div class="privacy-text-area">
+                <p class="text-gray-700 text-sm mb-2 md:mb-0">
+                    To enhance your experience, our chatbot may collect your company name, user name, phone number, and email. This data is used to tailor our services and improve communication. For details, see our
+                    <a href="https://redboxaiautomation.netlify.app/privacy-policy" class="color-accent-red hover:underline font-medium">Privacy Policy</a>.
+                </p>
+            </div>
+            <button id="acceptConsentButton" class="gradient-button text-white font-semibold py-2 px-6 rounded-full text-sm shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 mt-3 md:mt-0">
+                Ok
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Calendly modal functions
+        function openCalendlyModal() {
+            const modal = document.getElementById('calendlyModal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+
+        function closeCalendlyModal() {
+            const modal = document.getElementById('calendlyModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto'; // Restore scrolling
+        }
+
+        // Close modal when clicking outside the content
+        document.getElementById('calendlyModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeCalendlyModal();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeCalendlyModal();
+            }
+        });
+
+        // JavaScript for Gemini API integration (only Business Idea Brainstormer logic remains)
+        document.addEventListener('DOMContentLoaded', () => {
+            const apiKey = ""; // Canvas will automatically provide this in runtime
+
+            /**
+             * Calls the Gemini API to generate content.
+             * @param {string} prompt The text prompt for the LLM.
+             * @returns {Promise<string>} The generated text.
+             */
+            async function callGeminiAPI(prompt) {
+                let chatHistory = [];
+                chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+
+                const payload = { contents: chatHistory };
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    const result = await response.json();
+
+                    if (result.candidates && result.candidates.length > 0 &&
+                        result.candidates[0].content && result.candidates[0].content.parts &&
+                        result.candidates[0].content.parts.length > 0) {
+                        return result.candidates[0].content.parts[0].text;
+                    } else {
+                        console.error("Gemini API response structure unexpected:", result);
+                        return "Failed to generate content. Please try again.";
+                    }
+                } catch (error) {
+                    console.error("Error calling Gemini API:", error);
+                    return "An error occurred while connecting to the AI. Please try again.";
+                    }
+            }
+
+            // --- Business Idea Brainstormer Logic (removed as per user request) ---
+            // The code for this section has been removed.
+        });
+    </script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const privacyConsentBanner = document.getElementById('privacyConsentBanner');
+        const acceptConsentButton = document.getElementById('acceptConsentButton');
+
+        // Function to show the banner
+        function showBanner() {
+            privacyConsentBanner.classList.add('active');
+        }
+
+        // Function to hide the banner
+        function hideBanner() {
+            privacyConsentBanner.classList.remove('active');
+        }
+
+        // Show the banner automatically when the page loads
+        showBanner();
+
+        // Event listener for the "I Agree" button
+        if (acceptConsentButton) {
+            acceptConsentButton.addEventListener('click', hideBanner);
+        }
+    });
+</script>
+
+</body>
+</html>
